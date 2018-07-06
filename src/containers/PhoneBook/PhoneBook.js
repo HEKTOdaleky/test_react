@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {postBooksData} from "../../store/actions/phonebook";
+import Contact from "../../components/Contact/Contact";
+import {CardColumns} from "reactstrap";
 
 class PhoneBook extends Component {
     componentDidMount() {
@@ -9,9 +11,13 @@ class PhoneBook extends Component {
 
     render() {
         return (
-            <div>
-                Hello
-            </div>
+            <CardColumns>
+                {
+                    this.props.phoneBook.map((item, index) => {
+                        return <Contact key={index} {...item}/>
+                    })
+                }
+            </CardColumns>
         )
     }
 };
