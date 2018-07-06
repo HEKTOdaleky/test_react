@@ -1,7 +1,7 @@
 import {GET_PHONE_BOOK_FAILURE, GET_PHONE_BOOK_SUCCESS} from "../actions/actionTypes";
 
 const initialState = {
-    phoneBook: null,
+    phoneBook: [],
     error: null
 };
 

@@ -34,7 +34,7 @@ class Contact extends Component {
                         <CardTitle>{this.props.name}</CardTitle>
                         <CardSubtitle>{this.props.user}</CardSubtitle>
                         <CardText>{this.props.phone}</CardText>
-                        <Button onClick={this.handleShow}>Button</Button>
+                        <Button onClick={this.handleShow}>View Info</Button>
                     </CardBody>
                 </Card>
             </Col>
