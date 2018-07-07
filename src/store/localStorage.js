@@ -3,14 +3,12 @@ export const saveState = state => {
     const serializedState = JSON.stringify(state);
     localStorage.setItem('state', serializedState);
   } catch (e) {
-    console.log('Could not save state');
   }
 };
 
 export const loadState = () => {
   try {
     const serializedState = localStorage.getItem('state');
-    console.log(serializedState);
     if (serializedState === null) {
       return undefined;
     }

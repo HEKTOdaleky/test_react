@@ -3,16 +3,16 @@ import {NotificationManager} from "react-notifications";
 import {CHANGE_PHONE_BOOK, GET_PHONE_BOOK_FAILURE, GET_PHONE_BOOK_SUCCESS} from "./actionTypes";
 
 const getPhoneBookSuccess = (phone) => {
-    let sortedArray = phone.sort((a, b) => {
-        if (a.name > b.name) {
-            return 1;
-        }
-        if (a.name < b.name) {
-            return -1;
-        }
-        return 0;
-
-    });
+    // let sortedArray = phone.sort((a, b) => {
+    //     if (a.name > b.name) {
+    //         return 1;
+    //     }
+    //     if (a.name < b.name) {
+    //         return -1;
+    //     }
+    //     return 0;
+    //
+    // });
     return {type: GET_PHONE_BOOK_SUCCESS, phone};
 };
 const getPhoneBookFailure = (err) => {
@@ -21,7 +21,6 @@ const getPhoneBookFailure = (err) => {
 export const getPhoneBookData = () => {
     return dispatch => {
         axios.get('/users').then(response => {
-            console.log(response.data);
             dispatch(getPhoneBookSuccess(response.data));
             NotificationManager.success("Данные загружены");
         }, error => {

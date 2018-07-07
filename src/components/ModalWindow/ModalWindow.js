@@ -1,14 +1,13 @@
 import React, {Component} from "react";
-import {Button, Modal} from "react-bootstrap";
+import {Modal} from "react-bootstrap";
 import EditModal from "./Modals/EditModal";
 import InfoModal from "./Modals/InfoModal";
 
 class ModalWindow extends Component {
     constructor(props) {
-        console.log("Constructor", props);
         super(props);
         Object.keys(props).map(item => {
-            this.state[item] = props[item];
+            return this.state[item] = props[item];
 
         });
 
@@ -55,7 +54,6 @@ class ModalWindow extends Component {
                                               change={this.onChangeHandler}
                                               action={this.cancelEdit}{...this.state}/> :
                     <InfoModal action={this.editContact}{...this.props}/>}
-                <Button onClick={() => console.log(this.props, this.state)}></Button>
             </Modal>
         );
     }
