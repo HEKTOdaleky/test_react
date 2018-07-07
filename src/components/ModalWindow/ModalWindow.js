@@ -1,24 +1,64 @@
-import React from "react";
-import {Button, Image, Modal} from "react-bootstrap";
+import React, {Component} from "react";
+import {Button, Modal} from "react-bootstrap";
+import EditModal from "./Modals/EditModal";
+import InfoModal from "./Modals/InfoModal";
 
-const ModalForm = props => {
-    return (
-        <Modal show={props.show} onHide={props.close}>
-            <Modal.Header>
-                <Modal.Title>{props.name}</Modal.Title>
-                <Image src={props.avatar}/>
-            </Modal.Header>
-            <Modal.Body><p>{props.email}</p>
-                <p>{props.username}</p>
-                <p>{props.phone}</p>
-                <p>{props.address.country+" "+props.address.city}</p></Modal.Body>
+class ModalWindow extends Component {
+    constructor(props) {
+        console.log("Constructor", props);
+        super(props);
+        Object.keys(props).map(item => {
+            this.state[item] = props[item];
 
-            <Modal.Footer>
-                <Button onClick={props.close}>Close</Button>
-                <Button onClick={props.action} bsStyle="primary">Edit</Button>
-            </Modal.Footer>
-        </Modal>
-    );
+        });
+
+
+    }
+
+    state = {
+        edit: false
+    };
+    editContact = () => {
+        this.setState({
+            edit: true
+        })
+    };
+    cancelEdit = () => {
+        this.setState({
+            edit: false
+        })
+    };
+    onChangeHandler = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    };
+    onChangeCountry = event => {
+        let address = this.state.address;
+        address[event.target.name] = event.target.value;
+        this.setState({
+            address
+        });
+    };
+    saveHandler = () => {
+
+        this.props.changeContact(this.props.name, this.state);
+        this.cancelEdit();
+        this.props.close();
+    };
+
+    render() {
+        return (
+            <Modal show={this.props.show} onHide={this.props.close}>
+                {this.state.edit ? <EditModal save={this.saveHandler}
+                                              changeCountry={this.onChangeCountry}
+                                              change={this.onChangeHandler}
+                                              action={this.cancelEdit}{...this.state}/> :
+                    <InfoModal action={this.editContact}{...this.props}/>}
+                <Button onClick={() => console.log(this.props, this.state)}></Button>
+            </Modal>
+        );
+    }
 };
 
-export default ModalForm;
+export default ModalWindow;

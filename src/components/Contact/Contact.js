@@ -23,7 +23,6 @@ class Contact extends Component {
             <Col sm="3" style={{margin: "20px 0"}}>
                 <ModalWindow show={this.state.show}
                              close={this.handleClose}
-                             action={this.handleClose}
                              {...this.props}/>
 
 

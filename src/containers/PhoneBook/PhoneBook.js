@@ -1,12 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {postBooksData} from "../../store/actions/phonebook";
+import {changePhoneBook, getPhoneBookData} from "../../store/actions/phonebook";
 import Contact from "../../components/Contact/Contact";
 import {CardColumns} from "reactstrap";
 
 class PhoneBook extends Component {
     componentDidMount() {
-        this.props.postBooksData()
+        if (!this.props.phoneBook.length)
+            this.props.postBooksData()
+    };
+
+    componentDidUpdate() {
+        console.log("Update", this.props.phoneBook);
     }
 
     render() {
@@ -15,7 +20,7 @@ class PhoneBook extends Component {
 
                 {
                     this.props.phoneBook.map((item, index) => {
-                        return <Contact key={index} {...item}/>
+                        return <Contact changeContact={this.props.changePhoneBook} key={index} {...item}/>
                     })
                 }
             </CardColumns>
@@ -27,7 +32,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    postBooksData: () => dispatch(postBooksData())
+    postBooksData: () => dispatch(getPhoneBookData()),
+    changePhoneBook: (oldName, newContact) => dispatch(changePhoneBook(oldName, newContact))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhoneBook);

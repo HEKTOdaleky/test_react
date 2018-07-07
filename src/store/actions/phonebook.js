@@ -1,6 +1,6 @@
 import axios from '../../axios-api';
 import {NotificationManager} from "react-notifications";
-import {GET_PHONE_BOOK_FAILURE, GET_PHONE_BOOK_SUCCESS} from "./actionTypes";
+import {CHANGE_PHONE_BOOK, GET_PHONE_BOOK_FAILURE, GET_PHONE_BOOK_SUCCESS} from "./actionTypes";
 
 const getPhoneBookSuccess = (phone) => {
     let sortedArray = phone.sort((a, b) => {
@@ -13,12 +13,12 @@ const getPhoneBookSuccess = (phone) => {
         return 0;
 
     });
-    return {type: GET_PHONE_BOOK_SUCCESS, phone: sortedArray};
+    return {type: GET_PHONE_BOOK_SUCCESS, phone};
 };
 const getPhoneBookFailure = (err) => {
     return {type: GET_PHONE_BOOK_FAILURE, err};
 };
-export const postBooksData = () => {
+export const getPhoneBookData = () => {
     return dispatch => {
         axios.get('/users').then(response => {
             console.log(response.data);
@@ -29,5 +29,23 @@ export const postBooksData = () => {
             NotificationManager.error("Ошибка при получении данных");
 
         })
+    }
+};
+
+export const changePhoneBookData = newBook => {
+    return {type: CHANGE_PHONE_BOOK, newBook}
+};
+
+export const changePhoneBook = (oldName, newContact) => {
+    delete newContact.show;
+    delete newContact.edit;
+    return (dispatch, getState) => {
+        let newArray = getState().phoneBook.phoneBook.map(contact => {
+            if (contact.name === oldName)
+                return newContact;
+            return contact;
+
+        });
+        dispatch(changePhoneBookData(newArray));
     }
 };
